@@ -950,5 +950,63 @@ int main() {
 }
 </pre>
   </P></section>
+   <section id="sorting_py" >
+  <p><hr><pre>
+
+  </pre>
+  </p>
+    class Company:
+    def __init__(self):
+        self.n = 0
+        self.salaries = []
+
+    def input_data(self):
+        self.n = int(input("Enter number of employees: "))
+        print("Enter salaries of employees:")
+        self.salaries = [float(input()) for _ in range(self.n)]
+
+    def selection_sort(self):
+        for i in range(self.n - 1):
+            min_idx = i
+            for j in range(i + 1, self.n):
+                if self.salaries[j] < self.salaries[min_idx]:
+                    min_idx = j
+            self.salaries[i], self.salaries[min_idx] = self.salaries[min_idx], self.salaries[i]
+
+    def bubble_sort(self):
+        for i in range(self.n - 1):
+            for j in range(self.n - i - 1):
+                if self.salaries[j] > self.salaries[j + 1]:
+                    self.salaries[j], self.salaries[j + 1] = self.salaries[j + 1], self.salaries[j]
+
+    def display_salaries(self):
+        print("Salaries:", *self.salaries)
+
+    def display_top_five(self):
+        print("Top 5 Salaries:", *self.salaries[-5:][::-1] if self.n >= 5 else self.salaries[::-1])
+
+
+def main():
+    c1 = Company()
+    c1.input_data()
+
+    c2 = Company()
+    c2.n = c1.n
+    c2.salaries = c1.salaries.copy()
+
+    print("\nSelection Sort:")
+    c1.selection_sort()
+    c1.display_salaries()
+    c1.display_top_five()
+
+    print("\nBubble Sort:")
+    c2.bubble_sort()
+    c2.display_salaries()
+    c2.display_top_five()
+
+
+if __name__ == "__main__":
+    main()
+
 </body>
 </html>
