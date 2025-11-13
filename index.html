@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smooth Scrolling Page</title>
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #121212;
+      color: #f5f5f5;
+    }
+
+  
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #1e1e1e;
+      padding: 15px 0;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: #ffcc00;
+      text-decoration: none;
+      margin: 0 20px;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+ 
+    section {
+      margin-top: 50px;
+      height: fit-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+    }
+
+    #Searching { background:#121212; }
+    #Sorting { background: #121212; }
+    #Queue { background: #121212; }
+    #linklist { background: #121212; }
+    #Hash_table1 { background: #121212; }
+    #cHash_table2 { background:#121212; }
+    #Pizza { background: #121212; }
+    #Binary_Search { background: #121212; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#Searching">Searching</a>
+    <a href="#Sorting">Sorting</a>
+    <a href="#Queue">Queue</a>
+    <a href="#linklist">linklist</a>
+    <a href="#Hash_table1">Hash table1</a>
+    <a href="#Hash_table2">Hash table2</a>
+    <a href="#Pizza">Pizza</a>
+    <a href="#Binary_Search">Binary Search</a>
+  </nav>
+
+  <section id="Searching" >
+  <p><hr><pre>
+#include <|iostream>
+using namespace std;
+class ECommerce {
+int n;
+int accountIDs[50];
+public:
+void input() {
+cout << "Enter number of customer accounts: ";
+cin >> n;
+cout << "Enter customer account IDs (sorted for binary
+search):\n";
+for (int i = 0; i < n; i++) {
+cin >> accountIDs[i];
+}
+}
+bool linearSearch(int key) {
+for (int i = 0; i < n; i++) {
+if (accountIDs[i] == key)
+return true;
+}
+return false;
+}
+bool binarySearch(int key) {
+int low = 0, high = n - 1;
+while (low <= high) {
+int mid = (low + high) / 2;
+if (accountIDs[mid] == key)
+return true;
+else if (accountIDs[mid] < key)
+low = mid + 1;
+else
+high = mid - 1;
+}
+return false;
+}
+};
+int main() {
+ECommerce ec;
+ec.input();
+int key;
+cout << "Enter account ID to search: ";
+cin >> key;
+cout << "\nUsing Linear Search...\n";
+if (ec.linearSearch(key))
+cout << "Account ID found using Linear Search.\n";
+else
+cout << "Account ID NOT found using Linear Search.\n";
+cout << "\nUsing Binary Search...\n";
+if (ec.binarySearch(key))
+cout << "Account ID found using Binary Search.\n";
+else
+cout << "Account ID NOT found using Binary Search.\n";
+return 0;
+}</pre>
+  </p></section><hr>
+  <section id="Sorting"><P><pre>
+#include <|iostream>
+using namespace std;
+class Company {
+int n;
+float salaries[50];
+public:
+void input() {
+cout << "Enter number of employees: ";
+cin >> n;
+cout << "Enter salaries of employees:\n";
+for (int i = 0; i < n; i++) {
+cin >> salaries[i];
+}
+}
+void selectionSort() {
+for (int i = 0; i < n - 1; i++) {
+int minIdx = i;
+for (int j = i + 1; j < n; j++) {
+if (salaries[j] < salaries[minIdx]) {
+minIdx = j;
+}
+}
+float temp = salaries[i];
+salaries[i] = salaries[minIdx];
+salaries[minIdx] = temp;
+}
+}
+void bubbleSort() {
+for (int i = 0; i < n - 1; i++) {
+for (int j = 0; j < n - i - 1; j++) {
+if (salaries[j] > salaries[j + 1]) {
+float temp = salaries[j];
+salaries[j] = salaries[j + 1];
+salaries[j + 1] = temp;
+}
+}
+}
+}
+void displaySalaries() {
+for (int i = 0; i < n; i++) {
+cout << salaries[i] << " ";
+}
+cout << endl;
+}
+void displayTopFive() {
+cout << "Top 5 Salaries: ";
+int count = (n < 5) ? n : 5;
+for (int i = n - 1; i >= n - count; i--) {
+cout << salaries[i] << " ";
+}
+cout << endl;
+}
+};
+int main() {
+Company c1, c2;
+c1.input();
+c2 = c1;
+cout << "\nSelection Sort:\n";
+c1.selectionSort();
+c1.displaySalaries();
+c1.displayTopFive();
+cout << "\nBubble Sort:\n";
+c2.bubbleSort();
+c2.displaySalaries();
+c2.displayTopFive();
+return 0;
+}
+  </pre>
+  </P></section><hr>
+  <section id="Queue"><P><pre>
+#include <|iostream>
+using namespace std;
+
+#define MAX 10
+
+class CallQueue {
+    int front, rear;
+    int customerID[MAX];
+    int callTime[MAX];
+
+public:
+    CallQueue() {
+        front = -1;
+        rear = -1;
+    }
+
+    void addCall(int id, int time) {
+        if (rear == MAX - 1) {
+            cout << "Queue is full. Cannot add more calls.\n";
+            return;
+        }
+        if (front == -1) front = 0;
+        rear++;
+        customerID[rear] = id;
+        callTime[rear] = time;
+        cout << "Call added for Customer ID: " << id << " with call time: " << time << " minutes.\n";
+    }
+
+    void answerCall() {
+        if (isQueueEmpty()) {
+            cout << "No calls to answer. Queue is empty.\n";
+            return;
+        }
+        cout << "Answering call of Customer ID: " << customerID[front]
+             << " (Call time: " << callTime[front] << " minutes).\n";
+        front++;
+        if (front > rear) {
+            front = rear = -1; // Reset queue
+        }
+    }
+     void viewQueue() {
+        if (isQueueEmpty()) {
+            cout << "Queue is empty.\n";
+            return;
+        }
+        cout << "Current Call Queue:\n";
+        for (int i = front; i <= rear; i++) {
+            cout << "Customer ID: " << customerID[i] << " | Call Time: " << callTime[i] << " minutes\n";
+        }
+    }
+
+    bool isQueueEmpty() {
+        return (front == -1 || front > rear);
+    }
+};
+
+int main() {
+    CallQueue cq;
+    int choice, id, time;
+
+    do {
+        cout << "\n--- Call Center Queue Menu ---\n";
+        cout << "1. Add Call\n2. Answer Call\n3. View Queue\n4. Check if Queue Empty\n5. Exit\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            cout << "Enter Customer ID: ";
+            cin >> id;
+            cout << "Enter Call Time (in minutes): ";
+            cin >> time;
+            cq.addCall(id, time);
+            break;
+        case 2:
+            cq.answerCall();
+            break;
+        case 3:
+            cq.viewQueue();
+            break;
+        case 4:
+            if (cq.isQueueEmpty())
+            cout << "Queue is empty.\n";
+            else
+                cout << "Queue is not empty.\n";
+            break;
+        case 5:
+            cout << "Exiting program.\n";
+            break;
+        default:
+            cout << "Invalid choice! Try again.\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+  </pre>
+  </P></section><hr>
+  <section id="linklist"><P><pre>
+#include <|iostream>
+#include <string>
+using namespace std;
+
+// Student class
+class Student {
+public:
+  int rollNo;
+    string name;
+    float marks;
+
+    Student(int r = 0, string n = "", float m = 0.0) {
+        rollNo = r;
+        name = n;
+        marks = m;
+    }
+
+    void display() const {
+        cout << "Roll No: " << rollNo << ", Name: " << name << ", Marks: " << marks << endl;
+    }
+};
+
+// Node class for doubly linked list
+class Node {
+public:
+    Student data;
+    Node* next;
+    Node* prev;
+
+    Node(Student s) {
+        data = s;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
+
+// Doubly linked list class
+class List {
+private:
+    Node* head;
+    Node* tail;
+
+public:
+    List() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    void addStudent(Student s) {
+        Node* newNode = new Node(s);
+         if (!head) {
+            head = tail = newNode;
+        } else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+        cout << "Student added successfully.\n";
+    }
+
+    void deleteStudent(int roll) {
+        Node* temp = head;
+        while (temp && temp->data.rollNo != roll)
+            temp = temp->next;
+
+        if (!temp) {
+            cout << "Student with Roll No " << roll << " not found!\n";
+            return;
+        }
+
+        if (temp == head)
+            head = head->next;
+        if (temp == tail)
+            tail = tail->prev;
+        if (temp->prev)
+            temp->prev->next = temp->next;
+        if (temp->next)
+            temp->next->prev = temp->prev;
+
+        delete temp;
+        cout << "Student deleted successfully.\n";
+    }
+
+    void updateStudent(int roll, string name, float marks) {
+        Node* temp = head;
+        while (temp) {
+            if (temp->data.rollNo == roll) {
+                temp->data.name = name;
+                temp->data.marks = marks;
+                cout << "Record updated successfully.\n";
+                return;
+            }
+            temp = temp->next;
+               }
+        cout << "Student not found!\n";
+    }
+
+    void searchStudent(int roll) {
+        Node* temp = head;
+        while (temp) {
+            if (temp->data.rollNo == roll) {
+                cout << "Student found:\n";
+                temp->data.display();
+                return;
+            }
+            temp = temp->next;
+        }
+        cout << "Student not found!\n";
+    }
+
+    void displayForward() {
+        Node* temp = head;
+        if (!temp) {
+            cout << "No records found.\n";
+            return;
+        }
+        cout << "\n--- Student Records (Forward) ---\n";
+        while (temp) {
+            temp->data.display();
+            temp = temp->next;
+        }
+    }
+
+    void displayBackward() {
+        Node* temp = tail;
+        if (!temp) {
+            cout << "No records found.\n";
+            return;
+        }
+        cout << "\n--- Student Records (Backward) ---\n";
+        while (temp) {
+            temp->data.display();
+            temp = temp->prev;
+        }
+    }
+};
+</pre>
+  </P></section><hr>
+  <section id="Hash_table1"> <P><pre>
+#include <|iostream>
+using namespace std;
+
+#define SIZE 10
+
+struct Node {
+    int key;
+    int value;
+    Node* next;
+};
+
+class HashTable {
+    Node* table[SIZE];
+
+public:
+    HashTable() {
+        for (int i = 0; i < SIZE; i++)
+            table[i] = NULL;
+    }
+
+    int hashFunction(int key) {
+        return key % SIZE;
+    }
+
+    void insert(int key, int value) {
+        int index = hashFunction(key);
+        Node* newNode = new Node{key, value, NULL};
+
+        if (table[index] == NULL) {
+            table[index] = newNode;
+        } else {
+            Node* temp = table[index];
+            while (temp->next != NULL)
+                temp = temp->next;
+            temp->next = newNode;
+        }
+        cout << "Inserted (" << key << ", " << value << ") at index " << index << endl;
+    }
+
+    void search(int key) {
+        int index = hashFunction(key);
+        Node* temp = table[index];
+        while (temp != NULL) {
+            if (temp->key == key) {
+                cout << "Key found! Value = " << temp->value << endl;
+                return;
+            }
+            temp = temp->next;
+        }
+        cout << "Key not found!" << endl;
+        }
+
+    void deleteKey(int key) {
+        int index = hashFunction(key);
+        Node* temp = table[index];
+        Node* prev = NULL;
+
+        while (temp != NULL && temp->key != key) {
+            prev = temp;
+            temp = temp->next;
+        }
+
+        if (temp == NULL) {
+            cout << "Key not found, cannot delete!" << endl;
+            return;
+        }
+
+        if (prev == NULL)
+            table[index] = temp->next;
+        else
+            prev->next = temp->next;
+
+        delete temp;
+        cout << "Key " << key << " deleted successfully." << endl;
+    }
+
+    void display() {
+        for (int i = 0; i < SIZE; i++) {
+            cout << "[" << i << "] --> ";
+            Node* temp = table[i];
+            while (temp != NULL) {
+                cout << "(" << temp->key << "," << temp->value << ") --> ";
+                temp = temp->next;
+            }
+            cout << "NULL" << endl;
+        }
+    }
+};
+
+int main() {
+    HashTable h;
+    int choice, key, value;
+       do {
+        cout << "\n--- Hash Table Menu ---\n";
+        cout << "1. Insert\n2. Search\n3. Delete\n4. Display\n5. Exit\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter key: ";
+                cin >> key;
+                cout << "Enter value: ";
+                cin >> value;
+                h.insert(key, value);
+                break;
+            case 2:
+                cout << "Enter key to search: ";
+                cin >> key;
+                h.search(key);
+                break;
+            case 3:
+                cout << "Enter key to delete: ";
+                cin >> key;
+                h.deleteKey(key);
+                break;
+            case 4:
+                h.display();
+                break;
+            case 5:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice!\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+</pre>
+  </P></section><hr>
+  <section id="Hash_table2"> <P><pre>
+#include <|iostream>
+using namespace std;
+
+#define SIZE 10
+
+class HashTable {
+    int table[SIZE];
+    int flag[SIZE]; // 0 = empty, 1 = occupied, -1 = deleted
+
+public:
+ HashTable() {
+        for (int i = 0; i < SIZE; i++) {
+            table[i] = -1;
+            flag[i] = 0;
+        }
+    }
+
+    int hashFunction(int key) {
+        return key % SIZE;
+    }
+
+    void insert(int key) {
+        int index = hashFunction(key);
+        int start = index;
+        do {
+            if (flag[index] == 0 || flag[index] == -1) {
+                table[index] = key;
+                flag[index] = 1;
+                cout << "Inserted key " << key << " at index " << index << endl;
+                return;
+            }
+            index = (index + 1) % SIZE;
+        } while (index != start);
+        cout << "Hash table is full! Cannot insert key " << key << endl;
+    }
+
+    void search(int key) {
+        int index = hashFunction(key);
+        int start = index;
+        do {
+            if (flag[index] == 0) {
+                cout << "Key " << key << " not found.\n";
+                return;
+            }
+            if (table[index] == key && flag[index] == 1) {
+                cout << "Key " << key << " found at index " << index << endl;
+                return;
+            }
+            index = (index + 1) % SIZE;
+        } while (index != start);
+        cout << "Key " << key << " not found.\n";
+    }
+    
+    void deleteKey(int key) {
+        int index = hashFunction(key);
+        int start = index;
+        do {
+            if (flag[index] == 0) {
+                cout << "Key not found, cannot delete!\n";
+                return;
+            }
+            if (table[index] == key && flag[index] == 1) {
+                flag[index] = -1;
+                table[index] = -1;
+                cout << "Key " << key << " deleted successfully.\n";
+                return;
+            }
+            index = (index + 1) % SIZE;
+        } while (index != start);
+        cout << "Key not found!\n";
+    }
+
+    void display() {
+        cout << "\n--- Hash Table ---\n";
+        for (int i = 0; i < SIZE; i++) {
+            cout << "[" << i << "] : ";
+            if (flag[i] == 1)
+                cout << table[i];
+            else if (flag[i] == -1)
+                cout << "Deleted";
+            else
+                cout << "Empty";
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    HashTable h;
+    int choice, key;
+
+    do {
+        cout << "\n--- Hash Table Menu ---\n";
+        cout << "1. Insert\n2. Search\n3. Delete\n4. Display\n5. Exit\nEnter choice: ";
+         cin >> choice;
+
+        switch (choice) {
+        case 1:
+            cout << "Enter key: ";
+            cin >> key;
+            h.insert(key);
+            break;
+        case 2:
+            cout << "Enter key to search: ";
+            cin >> key;
+            h.search(key);
+            break;
+        case 3:
+            cout << "Enter key to delete: ";
+            cin >> key;
+            h.deleteKey(key);
+            break;
+        case 4:
+            h.display();
+            break;
+        case 5:
+            cout << "Exiting program...\n";
+            break;
+        default:
+            cout << "Invalid choice!\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+  </pre>
+  </P></section><hr>
+  <section id="Pizza">
+    <P><pre>
+#include <|iostream>
+using namespace std;
+
+#define V 6  // number of locations
+
+int minKey(int key[], bool mstSet[]) {
+    int min = INT_MAX, min_index;
+    for (int v = 0; v < V; v++)
+        if (!mstSet[v] && key[v] < min)
+            min = key[v], min_index = v;
+    return min_index;
+}
+
+void printMST(int parent[], int graph[V][V]) {
+    int totalCost = 0;
+    cout << "Edge \tWeight\n";
+    for (int i = 1; i < V; i++) {
+        cout << parent[i] << " - " << i << " \t" << graph[i][parent[i]] << "\n";
+        totalCost += graph[i][parent[i]];
+    }
+    cout << "\nMinimum Total Delivery Time: " << totalCost << " minutes\n";
+}
+
+void primMST(int graph[V][V]) {
+    int parent[V];
+    int key[V];
+    bool mstSet[V];
+
+    for (int i = 0; i < V; i++)
+        key[i] = INT_MAX, mstSet[i] = false;
+
+    key[0] = 0;
+    parent[0] = -1;
+
+    for (int count = 0; count < V - 1; count++) {
+        int u = minKey(key, mstSet);
+        mstSet[u] = true;
+
+        for (int v = 0; v < V; v++)
+            if (graph[u][v] && !mstSet[v] && graph[u][v] < key[v])
+                parent[v] = u, key[v] = graph[u][v];
+    }
+
+    printMST(parent, graph);
+}
+
+int main() {
+    int graph[V][V] = {
+        {0, 10, 20, 0, 0, 0},
+        {10, 0, 30, 5, 0, 0},
+        {20, 30, 0, 15, 6, 0},
+        {0, 5, 15, 0, 8, 9},
+        {0, 0, 6, 8, 0, 12},
+        {0, 0, 0, 9, 12, 0}
+    };
+
+    cout << "Minimum Delivery Path using Prim's Algorithm:\n";
+    primMST(graph);
+
+    return 0;
+}
+    </pre>
+    </P>
+  </section><hr>
+  <section id="Binary_Search"> <P><pre>
+#include <|iostream>
+using namespace std;
+// Node class
+class Node {
+public:
+ int data;
+ Node *left, *right;
+ Node(int value) {
+ data = value;
+ left = right = nullptr;
+ }
+};
+// BST class
+class BST {
+ Node* root;
+ Node* insert(Node* node, int value) {
+ if (!node)
+ return new Node(value);
+ if (value < node->data)
+ node->left = insert(node->left, value);
+ else
+ node->right = insert(node->right, value);
+ return node;
+ }
+ void inorder(Node* node) {
+ if (!node) return;
+ inorder(node->left);
+ cout << node->data << " ";
+ inorder(node->right);
+ }
+ void preorder(Node* node) {
+ if (!node) return;
+ cout << node->data << " ";
+ preorder(node->left);
+ preorder(node->right);
+ }
+ void postorder(Node* node) {
+ if (!node) return;
+ postorder(node->left);
+ postorder(node->right);
+ cout << node->data << " ";
+ }
+ Node* search(Node* node, int value) {
+ if (!node || node->data == value)
+ return node;
+ if (value < node->data)
+ return search(node->left, value);
+ return search(node->right, value);
+ }
+ Node* findMin(Node* node) {
+ while (node && node->left)
+ node = node->left;
+ return node;
+ }
+ Node* deleteNode(Node* node, int value) {
+ if (!node) return node;
+ if (value < node->data)
+ node->left = deleteNode(node->left, value);
+ else if (value > node->data)
+ node->right = deleteNode(node->right, value);
+ else {
+ // Node with only one child or no child
+ if (!node->left) {
+ Node* temp = node->right;
+ delete node;
+ return temp;
+ } else if (!node->right) {
+ Node* temp = node->left;
+ delete node;
+ return temp;
+ }
+ // Node with two children: get inorder successor
+ Node* temp = findMin(node->right);
+ node->data = temp->data;
+ node->right = deleteNode(node->right, temp->data);
+ }
+ return node;
+ }
+ int height(Node* node) {
+ if (!node) return 0;
+ int leftH = height(node->left);
+ int rightH = height(node->right);
+ return max(leftH, rightH) + 1;
+ }
+ void mirror(Node* node) {
+ if (!node) return;
+ mirror(node->left);
+ mirror(node->right);
+ swap(node->left, node->right);
+ }
+public:
+ BST() { root = nullptr; }
+ void insert(int value) {
+ root = insert(root, value);
+ }
+ void inorder() {
+ cout << "Inorder Traversal: ";
+ inorder(root);
+ cout << endl;
+ }
+ void preorder() {
+ cout << "Preorder Traversal: ";
+ preorder(root);
+ cout << endl;
+ }
+ void postorder() {
+ cout << "Postorder Traversal: ";
+ postorder(root);
+ cout << endl;
+ }
+ void search(int value) {
+ Node* res = search(root, value);
+ if (res)
+ cout << "Value " << value << " found in tree.\n";
+ else
+ cout << "Value " << value << " not found!\n";
+ }
+ void deleteNode(int value) {
+ root = deleteNode(root, value);
+ cout << "Node deleted if existed.\n";
+ }
+ void findMin() {
+ Node* minNode = findMin(root);
+ if (minNode)
+ cout << "Minimum value: " << minNode->data << endl;
+ }
+ void displayHeight() {
+ cout << "Number of nodes in longest path: " << height(root) << endl;
+ }
+ void mirrorTree() {
+ mirror(root);
+ cout << "Tree has been mirrored.\n";
+ }
+};
+// Main function
+int main() {
+ BST tree;
+ int choice, value;
+ do {
+ cout << "\n==== Binary Search Tree Operations ====\n";
+ cout << "1. Insert Node\n2. Delete Node\n3. Search Node\n4. Display Traversals\n";
+ cout << "5. Find Minimum Value\n6. Display Height\n7. Mirror Tree\n0. Exit\n";
+ cout << "Enter choice: ";
+ cin >> choice;
+ switch (choice) {
+ case 1:
+ cout << "Enter value to insert: ";
+ cin >> value;
+ tree.insert(value);
+ break;
+ case 2:
+ cout << "Enter value to delete: ";
+ cin >> value;
+ tree.deleteNode(value);
+ break;
+ case 3:
+ cout << "Enter value to search: ";
+ cin >> value;
+ tree.search(value);
+ break;
+ case 4:
+ tree.inorder();
+ tree.preorder();
+ tree.postorder();
+ break;
+ case 5:
+ tree.findMin();
+ break;
+ case 6:
+ tree.displayHeight();
+ break;
+ case 7:
+ tree.mirrorTree();
+ break;
+ case 0:
+ cout << "Exiting program.\n";
+ break;
+ default:
+ cout << "Invalid choice!\n";
+ }
+ } while (choice != 0);
+ return 0;
+}
+</pre>
+  </P></section>
+</body>
+</html>
